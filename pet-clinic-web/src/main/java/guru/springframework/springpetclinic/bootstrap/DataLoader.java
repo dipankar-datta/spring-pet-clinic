@@ -1,6 +1,7 @@
 package guru.springframework.springpetclinic.bootstrap;
 
 import guru.springframework.springpetclinic.model.Owner;
+import guru.springframework.springpetclinic.model.Pet;
 import guru.springframework.springpetclinic.model.PetType;
 import guru.springframework.springpetclinic.model.Vet;
 import guru.springframework.springpetclinic.services.OwnerService;
@@ -8,6 +9,8 @@ import guru.springframework.springpetclinic.services.PetTypeService;
 import guru.springframework.springpetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -27,25 +30,47 @@ public class DataLoader implements CommandLineRunner {
 
         PetType dog = new PetType();
         dog.setName("Dog");
-        petTypeService.save(dog);
+        PetType savedDogType = petTypeService.save(dog);
 
         PetType cat = new PetType();
         cat.setName("Cat");
-        petTypeService.save(cat);
+        PetType savedCatType = petTypeService.save(cat);
 
         PetType bird = new PetType();
         bird.setName("Bird");
-        petTypeService.save(bird);
+        PetType savedBirdType = petTypeService.save(bird);
 
-        Owner owner1 = new Owner();
-        owner1.setFirstName("Michael");
-        owner1.setLastName("Weston");
-        ownerService.save(owner1);
+        Owner michaelWeston = new Owner();
+        michaelWeston.setFirstName("Michael");
+        michaelWeston.setLastName("Weston");
+        michaelWeston.setAddress("15th Cross, 9th Main");
+        michaelWeston.setCity("Bangalore");
+        michaelWeston.setTelephone("8899556622");
 
-        Owner owner2 = new Owner();
-        owner2.setFirstName("Fiona");
-        owner2.setLastName("Glenanne");
-        ownerService.save(owner2);
+        Pet jimy = new Pet();
+        jimy.setName("Jimy");;
+        jimy.setOwner(michaelWeston);
+        jimy.setPetType(savedDogType);
+        jimy.setBirthDate(LocalDate.now());
+
+        michaelWeston.getPets().add(jimy);
+        ownerService.save(michaelWeston);
+
+        Owner fionaGlenanne = new Owner();
+        fionaGlenanne.setFirstName("Fiona");
+        fionaGlenanne.setLastName("Glenanne");
+        fionaGlenanne.setAddress("21st Cross, 4th Main");
+        fionaGlenanne.setCity("Mysore");
+        fionaGlenanne.setTelephone("2233556688");
+
+        Pet micky = new Pet();
+        micky.setName("Micky");;
+        micky.setOwner(fionaGlenanne);
+        micky.setPetType(savedCatType);
+        micky.setBirthDate(LocalDate.now());
+
+        fionaGlenanne.getPets().add(micky);
+        ownerService.save(fionaGlenanne);
 
         System.out.println("Loaded Owners");
 
