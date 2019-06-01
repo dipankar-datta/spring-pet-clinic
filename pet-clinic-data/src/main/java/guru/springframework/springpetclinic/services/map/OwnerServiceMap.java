@@ -1,4 +1,4 @@
-package guru.springframework.springpetclinic.map;
+package guru.springframework.springpetclinic.services.map;
 
 import guru.springframework.springpetclinic.model.Owner;
 import guru.springframework.springpetclinic.services.OwnerService;
