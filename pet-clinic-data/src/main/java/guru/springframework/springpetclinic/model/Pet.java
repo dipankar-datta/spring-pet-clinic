@@ -13,7 +13,7 @@ public class Pet extends BaseEntity{
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "pet_type_id")
+    @JoinColumn(name = "type_id")
     private PetType petType;
 
     @ManyToOne
@@ -24,7 +24,8 @@ public class Pet extends BaseEntity{
     private LocalDate birthDate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
-    private Set<Visit> visits = new HashSet<Visit>();
+    private Set<Visit> visits = new HashSet<>();
+
 
     public String getName() {
         return name;
