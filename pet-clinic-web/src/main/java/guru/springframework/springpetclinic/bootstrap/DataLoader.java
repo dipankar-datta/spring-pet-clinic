@@ -1,10 +1,7 @@
 package guru.springframework.springpetclinic.bootstrap;
 
 import guru.springframework.springpetclinic.model.*;
-import guru.springframework.springpetclinic.services.OwnerService;
-import guru.springframework.springpetclinic.services.PetTypeService;
-import guru.springframework.springpetclinic.services.SpecialityService;
-import guru.springframework.springpetclinic.services.VetService;
+import guru.springframework.springpetclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +14,14 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -84,13 +83,18 @@ public class DataLoader implements CommandLineRunner {
 
         Pet micky = new Pet();
         micky.setName("Micky");
-        ;
         micky.setOwner(fionaGlenanne);
         micky.setPetType(savedCatType);
         micky.setBirthDate(LocalDate.now());
 
         fionaGlenanne.getPets().add(micky);
         ownerService.save(fionaGlenanne);
+
+        Visit catVisit = new Visit();
+        catVisit.setPet(micky);
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Sneezy kitty");
+        visitService.save(catVisit);
 
         Vet samAxe = new Vet();
         samAxe.setFirstName("Sam");
